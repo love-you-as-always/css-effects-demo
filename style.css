@@ -226,31 +226,8 @@
             transform: scale(1.05);
         }
         
-        /* 特效2：3D立体按钮 */
-        .btn-3d {
-            padding: 15px 40px;
-            background: linear-gradient(145deg, #6a11cb, #2575fc);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-            box-shadow: 
-                0 8px 0 #1e3c72,
-                0 15px 20px rgba(0, 0, 0, 0.3);
-        }
         
-        .btn-3d:active {
-            transform: translateY(8px);
-            box-shadow: 
-                0 0 0 #1e3c72,
-                0 5px 10px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* 特效3：渐变文字动画 */
+        /* 特效2：渐变文字动画 */
         .gradient-text {
             font-size: 2.5rem;
             font-weight: 800;
@@ -271,7 +248,7 @@
             50% { background-position: 100% 50%; }
         }
         
-        /* 特效4：旋转加载动画 */
+        /* 特效3：旋转加载动画 */
         .spinner {
             width: 80px;
             height: 80px;
@@ -288,7 +265,7 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* 特效5：卡片悬停3D翻转 */
+        /* 特效4：卡片悬停3D翻转 */
         .flip-card {
             width: 200px;
             height: 150px;
@@ -331,7 +308,7 @@
             transform: rotateY(180deg);
         }
         
-        /* 特效6：输入框聚焦动画 */
+        /* 特效5：输入框聚焦动画 */
         .animated-input {
             width: 250px;
             padding: 15px;
@@ -358,7 +335,7 @@
             pointer-events: none;
         }
         
-        /* 特效7：波浪文字效果 */
+        /* 特效6：波浪文字效果 */
         .wave-text {
             font-size: 2.2rem;
             font-weight: 700;
@@ -376,42 +353,8 @@
             50% { transform: translateY(-20px); }
         }
         
-        /* 特效8：背景粒子动画 */
-        .particles-container {
-            width: 200px;
-            height: 150px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-        }
         
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: white;
-            border-radius: 50%;
-            animation: float 10s infinite linear;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(150px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-150px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        /* 特效9：打字机文字效果 */
+        /* 特效7：打字机文字效果 */
         .typewriter {
             font-size: 1.8rem;
             font-weight: 600;
@@ -435,7 +378,7 @@
             50% { border-color: white }
         }
         
-        /* 特效10：进度条加载动画 */
+        /* 特效8：进度条加载动画 */
         .progress-container {
             width: 250px;
             height: 30px;

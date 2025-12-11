@@ -28,22 +28,22 @@
 }
 
 #season-bg-spring {
-    background-image: url('/frontend/assets/backgrounds/spring.jpg');
+    background-image: url('../../assets/backgrounds/spring.jpg');
     background-color: #4CAF50;
 }
 
 #season-bg-summer {
-    background-image: url('/frontend/assets/backgrounds/summer.jpg');
+    background-image: url('../../assets/backgrounds/summer.jpg');
     background-color: #FF9800;
 }
 
 #season-bg-autumn {
-    background-image: url('/frontend/assets/backgrounds/autumn.jpg');
+    background-image: url('../../assets/backgrounds/autumn.jpg');
     background-color: #FF5722;
 }
 
 #season-bg-winter {
-    background-image: url('/frontend/assets/backgrounds/winter.jpg');
+    background-image: url('../../assets/backgrounds/winter.jpg');
     background-color: #2196F3;
 }
 
