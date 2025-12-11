@@ -1,0 +1,78 @@
+<!-- 季节背景组件 - 可复用的HTML结构 -->
+
+<!-- 背景图层 -->
+<div class="seasonal-background-container">
+    <div class="seasonal-bg-image" id="season-bg-spring"></div>
+    <div class="seasonal-bg-image" id="season-bg-summer"></div>
+    <div class="seasonal-bg-image" id="season-bg-autumn"></div>
+    <div class="seasonal-bg-image active" id="season-bg-winter"></div>
+    <div class="seasonal-bg-overlay"></div>
+</div>
+
+<!-- 顶部固定导航栏 -->
+<header class="seasonal-fixed-header">
+    <div class="header-container">
+        <!-- 左侧：时间日期显示 -->
+        <div class="header-left">
+            <div class="seasonal-time-display">
+                <div class="seasonal-date-container">
+                    <div class="seasonal-icon-wrapper" id="seasonal-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <div class="seasonal-date-info">
+                        <div class="seasonal-date" id="seasonal-date">12月7日 星期五</div>
+                        <div class="seasonal-time" id="seasonal-time">15:30:28</div>
+                    </div>
+                </div>
+                <div class="seasonal-greeting" id="seasonal-greeting">冬至已至，静待春归</div>
+            </div>
+        </div>
+        
+        <!-- 右侧：导航链接 -->
+        <div class="header-right">
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#services" class="nav-link">
+                            <i class="fas fa-box-open"></i>
+                            <span>服务产品</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link contact-btn">
+                            <i class="fas fa-phone"></i>
+                            <span>我的电话</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#login" class="nav-link login-btn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>登录</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#register" class="nav-link register-btn">
+                            <i class="fas fa-user-plus"></i>
+                            <span>注册</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- 页面主要内容容器 - 放在固定头部下面 -->
+<main class="page-content">
+    <!-- 这里放页面的其他内容 -->
+    <div style="height: 2000px; padding: 20px; color: white; margin-top: 120px;">
+        <h1>页面内容</h1>
+        <p>向下滚动页面，顶部导航栏会一直固定在顶部</p>
+        <p>继续向下滚动...</p>
+    </div>
+</main>
+
+<!-- 飘落效果容器 -->
+<div class="seasonal-falling-effects">
+    <!-- 飘落元素由JS动态生成 -->
+</div>

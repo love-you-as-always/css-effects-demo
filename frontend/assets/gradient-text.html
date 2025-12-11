@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变文字动画</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f0f23;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 1200px;
+        }
+        
+        .gradient-text {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, 
+                #ff0080, 
+                #ff8c00, 
+                #40e0d0, 
+                #ff0080);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientMove 3s linear infinite;
+        }
+        
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .text-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .text-item {
+            font-size: 2.2rem;
+            font-weight: 700;
+            padding: 20px 40px;
+            margin: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        
+        .rainbow {
+            background: linear-gradient(90deg, 
+                #ff0000, #ff8000, #ffff00, 
+                #00ff00, #00ffff, #0080ff, 
+                #8000ff, #ff0000);
+            background-size: 400% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rainbowMove 4s linear infinite;
+        }
+        
+        .ocean {
+            background: linear-gradient(90deg, 
+                #00b4db, #0083b0, #00b4db);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: oceanMove 3s ease-in-out infinite;
+        }
+        
+        .fire {
+            background: linear-gradient(90deg, 
+                #ff512f, #f09819, #ff512f);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fireMove 2s ease-in-out infinite;
+        }
+        
+        @keyframes rainbowMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 400% 50%;
+            }
+        }
+        
+        @keyframes oceanMove {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes fireMove {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .controls {
+            margin-top: 40px;
+            color: #fff;
+            font-size: 18px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .gradient-text {
+                font-size: 2.5rem;
+            }
+            
+            .text-item {
+                font-size: 1.5rem;
+                padding: 15px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="gradient-text">CSS渐变文字动画</h1>
+        
+        <div class="text-group">
+            <div class="text-item rainbow">彩虹渐变效果</div>
+            <div class="text-item ocean">海洋渐变效果</div>
+            <div class="text-item fire">火焰渐变效果</div>
+        </div>
+        
+        <div class="controls">
+            <p>渐变颜色自动循环流动，创建生动的视觉效果</p>
+        </div>
+    </div>
+</body>
+</html>

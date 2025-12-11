@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的网站</title>
+    
+    <!-- 引入组件CSS -->
+    <link rel="stylesheet" href="/frontend/components/seasonal-background/seasonal-background.css">
+    <link rel="stylesheet" href="/frontend/global%20styles/theme.css">
+    <link rel="stylesheet" href="/frontend/global%20styles/base.css">
+    
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 主页样式 -->
+    <style>
+        /* 修复：重置body和html的滚动设置 */
+        html {
+            scroll-behavior: smooth; /* 添加平滑滚动 */
+            overflow-x: hidden; /* 防止横向滚动 */
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden; /* 防止横向滚动 */
+            position: relative;
+        }
+        
+        /* 主页容器 - 修复滚动问题 */
+        .main-container {
+            position: relative;
+            z-index: 10000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            overflow: visible; /* 允许内容溢出显示滚动条 */
+        }
+        
+        /* 内容区域 - 修复高度和溢出问题 */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* 改为flex-start允许滚动 */
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+            min-height: auto; /* 移除固定高度 */
+            overflow: visible;
+        }
+        
+        /* 方块网格容器 - 修复外边距 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        /* 修复：网站头部样式 */
+        .site-header {
+            position: fixed; /* 改为fixed固定在顶部 */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10001; /* 确保在最上层 */
+            background: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-nav {
+            display: flex;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* 修复：时间日期显示位置 */
+        .seasonal-time-display {
+            position: fixed; /* 改为fixed定位 */
+            top: 100px; /* 放在header下方 */
+            right: 20px;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 180px;
+        }
+        
+        /* 修复：主内容区域的顶部内边距，为固定header留出空间 */
+        .content-area {
+            padding-top: 120px; /* 增加顶部内边距，避免内容被header遮挡 */
+        }
+        
+        /* 单个方块样式 */
+        .feature-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* 方块图标 */
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        /* 方块标题 */
+        .feature-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 方块描述 */
+        .feature-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        /* 方块悬停效果 */
+        .feature-box:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .feature-box:hover .feature-icon {
+            transform: scale(1.1);
+            animation: icon-pulse 1s ease-in-out;
+        }
+        
+        @keyframes icon-pulse {
+            0%, 100% { transform: scale(1.1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        /* 按钮样式 */
+        .feature-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            margin-top: 10px;
+        }
+        
+        .feature-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 底部小字区域 */
+        .footer-text {
+            margin-top: 40px;
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 15px;
+        }
+        
+        .footer-text p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .footer-text .highlight {
+            color: #ffeb3b;
+            font-weight: 600;
+        }
+        
+        /* 添加滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .seasonal-time-display {
+                top: 90px;
+                right: 15px;
+                min-width: 160px;
+            }
+            
+            .content-area {
+                padding-top: 110px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .feature-box {
+                padding: 30px 20px;
+                min-height: 250px;
+            }
+            
+            .feature-icon {
+                font-size: 2.8rem;
+                width: 70px;
+                height: 70px;
+                line-height: 70px;
+            }
+            
+            .feature-title {
+                font-size: 1.5rem;
+            }
+            
+            .seasonal-time-display {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 20px auto;
+                width: 90%;
+            }
+            
+            .site-header {
+                padding: 10px 0;
+            }
+            
+            .nav-list {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .content-area {
+                padding-top: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .seasonal-time-display {
+                padding: 10px 15px;
+            }
+        }
+        
+        /* 季节主题适配 */
+        body.season-spring .feature-box {
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        body.season-summer .feature-box {
+            border-color: rgba(255, 152, 0, 0.3);
+        }
+        
+        body.season-autumn .feature-box {
+            border-color: rgba(255, 87, 34, 0.3);
+        }
+        
+        body.season-winter .feature-box {
+            border-color: rgba(33, 150, 243, 0.3);
+        }
+        
+        body.season-spring .feature-btn:hover {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(139, 195, 74, 0.3));
+        }
+        
+        body.season-summer .feature-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 193, 7, 0.3));
+        }
+        
+        body.season-autumn .feature-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.3), rgba(255, 152, 0, 0.3));
+        }
+        
+        body.season-winter .feature-btn:hover {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.3), rgba(3, 169, 244, 0.3));
+        }
+        
+        /* 添加导航按钮的季节适配 */
+        body.season-spring .nav-link:hover {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(139, 195, 74, 0.3));
+        }
+        
+        body.season-summer .nav-link:hover {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 193, 7, 0.3));
+        }
+        
+        body.season-autumn .nav-link:hover {
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.3), rgba(255, 152, 0, 0.3));
+        }
+        
+        body.season-winter .nav-link:hover {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.3), rgba(3, 169, 244, 0.3));
+        }
+        
+        /* 添加锚点目标样式 */
+        #services, #contact, #login, #register {
+            scroll-margin-top: 120px; /* 滚动到锚点时留出header空间 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 季节背景组件 -->
+    <div class="seasonal-background-container">
+        <div class="seasonal-bg-image" id="season-bg-spring"></div>
+        <div class="seasonal-bg-image" id="season-bg-summer"></div>
+        <div class="seasonal-bg-image" id="season-bg-autumn"></div>
+        <div class="seasonal-bg-image active" id="season-bg-winter"></div>
+        <div class="seasonal-bg-overlay"></div>
+    </div>
+
+    <!-- 网站头部 -->
+    <header class="site-header">
+        <div class="header-content">
+            <div class="header-left">
+                <!-- 左侧区域，可根据需要添加logo -->
+                <div style="color: white; font-weight: bold; font-size: 1.2rem;">
+                    <i class="fas fa-home"></i> 我的网站
+                </div>
+            </div>
+            <div class="header-right">
+                <nav class="header-nav">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#services" class="nav-link">
+                                <i class="fas fa-box-open"></i>
+                                <span>服务产品</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#contact" class="nav-link contact-btn">
+                                <i class="fas fa-phone"></i>
+                                <span>我的电话</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#login" class="nav-link login-btn">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>登录</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#register" class="nav-link register-btn">
+                                <i class="fas fa-user-plus"></i>
+                                <span>注册</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 时间日期显示 -->
+    <div class="seasonal-time-display">
+        <div class="seasonal-date-container">
+            <div class="seasonal-icon-wrapper" id="seasonal-icon">
+                <i class="fas fa-snowflake"></i>
+            </div>
+            <div class="seasonal-date-info">
+                <div class="seasonal-date" id="seasonal-date">12月7日 星期五</div>
+                <div class="seasonal-time" id="seasonal-time">15:30:28</div>
+            </div>
+        </div>
+        <div class="seasonal-greeting" id="seasonal-greeting">冬至已至，静待春归</div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-container">
+        <div class="content-area">
+            <!-- 方块网格 -->
+            <div class="grid-container">
+                <!-- 方块1 -->
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="feature-title">创意设计</h3>
+                    <p class="feature-desc">提供专业的设计解决方案，打造独特的视觉体验。我们的设计团队拥有丰富的经验，能够为您的品牌创造独特的视觉识别。</p>
+                    <a href="#design" class="feature-btn">了解更多</a>
+                </div>
+                
+                <!-- 方块2 -->
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="feature-title">技术开发</h3>
+                    <p class="feature-desc">专业的网站和应用开发服务。采用最新的技术栈，确保高性能和优秀的用户体验。</p>
+                    <a href="#development" class="feature-btn">开始项目</a>
+                </div>
+                
+                <!-- 方块3 -->
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">数据分析</h3>
+                    <p class="feature-desc">深入的数据分析和洞察，帮助您做出明智的商业决策。我们的分析工具提供实时数据和可视化报告。</p>
+                    <a href="#analytics" class="feature-btn">查看报告</a>
+                </div>
+                
+                <!-- 方块4 -->
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">安全防护</h3>
+                    <p class="feature-desc">全面的网络安全解决方案，保护您的数据和业务不受威胁。24/7监控和实时威胁检测。</p>
+                    <a href="#security" class="feature-btn">安全保障</a>
+                </div>
+                
+                <!-- 方块5 -->
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">团队协作</h3>
+                    <p class="feature-desc">高效的团队协作工具，提升工作效率。实时沟通、任务管理和文件共享一站式解决。</p>
+                    <a href="#collaboration" class="feature-btn">加入团队</a>
+                </div>
+                
+                <!-- 方块6 -->
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="feature-title">快速部署</h3>
+                    <p class="feature-desc">快速的应用部署和托管服务，让您的想法迅速落地。支持多种平台和环境。</p>
+                    <a href="#deployment" class="feature-btn">立即部署</a>
+                </div>
+            </div>
+            
+            <!-- 添加更多内容以测试滚动 -->
+            <div style="height: 800px; display: flex; flex-direction: column; gap: 40px; max-width: 1200px; width: 100%;">
+                <!-- 锚点目标区域 -->
+                <div id="services" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; margin-top: 40px;">
+                    <h2 style="color: white; margin-bottom: 20px;">📦 服务产品</h2>
+                    <p style="color: rgba(255,255,255,0.8);">这里是服务产品区域。通过点击导航栏的"服务产品"链接，页面会平滑滚动到这里。</p>
+                </div>
+                
+                <div id="contact" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px;">
+                    <h2 style="color: white; margin-bottom: 20px;">📞 我的电话</h2>
+                    <p style="color: rgba(255,255,255,0.8);">这里是联系方式区域。电话：400-123-4567，邮箱：contact@example.com</p>
+                </div>
+                
+                <div id="login" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px;">
+                    <h2 style="color: white; margin-bottom: 20px;">🔐 登录</h2>
+                    <p style="color: rgba(255,255,255,0.8);">这里是登录区域。您可以在此登录您的账户。</p>
+                </div>
+                
+                <div id="register" style="background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px;">
+                    <h2 style="color: white; margin-bottom: 20px;">👤 注册</h2>
+                    <p style="color: rgba(255,255,255,0.8);">这里是注册区域。您可以在此创建新账户。</p>
+                </div>
+            </div>
+            
+            <!-- 底部小字区域 -->
+            <div class="footer-text">
+                <p><span class="highlight">更多特效持续更新中...</span> | 关注我们的社交媒体获取最新动态</p>
+                <p>抖音：@your_account | 欢迎提交您的CSS特效创意和建议</p>
+                <p>邮箱：contact@example.com | 电话：400-123-4567</p>
+                <p>© 2023 我的网站 版权所有 | 隐私政策 | 服务条款</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 飘落效果容器 -->
+    <div class="seasonal-falling-effects"></div>
+
+    <!-- 引入组件JS -->
+    <script src="/frontend/components/seasonal-background/seasonal-background.js"></script>
+    
+    <!-- 自定义配置 -->
+    <script>
+        // 如果需要自定义配置，可以这样使用
+        // window.seasonalBackground = new SeasonalBackground({
+        //     showTime: true,
+        //     showGreeting: true,
+        //     showFallingEffects: true,
+        //     autoUpdate: true
+        // });
+        
+        // 页面加载完成后的额外操作
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为方块添加点击效果
+            const featureBoxes = document.querySelectorAll('.feature-box');
+            featureBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        // 计算header的高度
+                        const headerHeight = document.querySelector('.site-header').offsetHeight;
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - headerHeight - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 更新实时时间
+            function updateTime() {
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('zh-CN', {
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'long'
+                });
+                const timeStr = now.toLocaleTimeString('zh-CN', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                
+                const dateElement = document.getElementById('seasonal-date');
+                const timeElement = document.getElementById('seasonal-time');
+                
+                if(dateElement) dateElement.textContent = dateStr;
+                if(timeElement) timeElement.textContent = timeStr;
+            }
+            
+            // 初始更新时间
+            updateTime();
+            // 每秒更新一次时间
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>

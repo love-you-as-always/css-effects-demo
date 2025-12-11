@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡片悬停3D翻转</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            perspective: 1000px;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 1400px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            margin-bottom: 50px;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            width: 280px;
+            height: 380px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+        
+        .card:hover {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+        
+        .card-front {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .card-back {
+            background: white;
+            color: #333;
+            transform: rotateY(180deg);
+            text-align: center;
+        }
+        
+        .icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .card-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        /* 卡片1 - 设计 */
+        .card1 .card-front {
+            background: linear-gradient(45deg, #ff6b6b, #ffa36c);
+        }
+        
+        .card1 .card-back {
+            background: linear-gradient(45deg, #fff, #ffe8e8);
+        }
+        
+        /* 卡片2 - 开发 */
+        .card2 .card-front {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+        
+        .card2 .card-back {
+            background: linear-gradient(45deg, #fff, #e8fff8);
+        }
+        
+        /* 卡片3 - 创意 */
+        .card3 .card-front {
+            background: linear-gradient(45deg, #ffd166, #ffa36c);
+        }
+        
+        .card3 .card-back {
+            background: linear-gradient(45deg, #fff, #fff8e8);
+        }
+        
+        /* 卡片4 - 科技 */
+        .card4 .card-front {
+            background: linear-gradient(45deg, #118ab2, #06d6a0);
+        }
+        
+        .card4 .card-back {
+            background: linear-gradient(45deg, #fff, #e8f8ff);
+        }
+        
+        .features {
+            list-style: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .features li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .btn {
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .instructions {
+            color: #666;
+            font-size: 18px;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>卡片悬停3D翻转效果</h1>
+        
+        <div class="cards-container">
+            <!-- 卡片1 -->
+            <div class="card card1">
+                <div class="card-front">
+                    <div class="icon">🎨</div>
+                    <h2 class="card-title">创意设计</h2>
+                    <p class="card-desc">悬停翻转查看详情</p>
+                </div>
+                <div class="card-back">
+                    <h2 class="card-title">设计服务</h2>
+                    <p class="card-desc">专业的UI/UX设计，打造卓越用户体验</p>
+                    <ul class="features">
+                        <li>UI界面设计</li>
+                        <li>用户体验优化</li>
+                        <li>品牌形象设计</li>
+                        <li>动效设计</li>
+                    </ul>
+                    <button class="btn">了解更多</button>
+                </div>
+            </div>
+            
+            <!-- 卡片2 -->
+            <div class="card card2">
+                <div class="card-front">
+                    <div class="icon">💻</div>
+                    <h2 class="card-title">Web开发</h2>
+                    <p class="card-desc">悬停翻转查看详情</p>
+                </div>
+                <div class="card-back">
+                    <h2 class="card-title">开发服务</h2>
+                    <p class="card-desc">全栈Web应用开发解决方案</p>
+                    <ul class="features">
+                        <li>前端开发</li>
+                        <li>后端开发</li>
+                        <li>移动端适配</li>
+                        <li>性能优化</li>
+                    </ul>
+                    <button class="btn">了解更多</button>
+                </div>
+            </div>
+            
+            <!-- 卡片3 -->
+            <div class="card card3">
+                <div class="card-front">
+                    <div class="icon">🚀</div>
+                    <h2 class="card-title">创新科技</h2>
+                    <p class="card-desc">悬停翻转查看详情</p>
+                </div>
+                <div class="card-back">
+                    <h2 class="card-title">科技创新</h2>
+                    <p class="card-desc">前沿技术解决方案与应用</p>
+                    <ul class="features">
+                        <li>人工智能</li>
+                        <li>大数据分析</li>
+                        <li>云计算服务</li>
+                        <li>物联网技术</li>
+                    </ul>
+                    <button class="btn">了解更多</button>
+                </div>
+            </div>
+            
+            <!-- 卡片4 -->
+            <div class="card card4">
+                <div class="card-front">
+                    <div class="icon">📱</div>
+                    <h2 class="card-title">移动应用</h2>
+                    <p class="card-desc">悬停翻转查看详情</p>
+                </div>
+                <div class="card-back">
+                    <h2 class="card-title">移动开发</h2>
+                    <p class="card-desc">跨平台移动应用开发</p>
+                    <ul class="features">
+                        <li>iOS应用开发</li>
+                        <li>Android应用开发</li>
+                        <li>React Native</li>
+                        <li>Flutter开发</li>
+                    </ul>
+                    <button class="btn">了解更多</button>
+                </div>
+            </div>
+        </div>
+        
+        <p class="instructions">将鼠标悬停在卡片上查看3D翻转效果</p>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                alert('了解更多功能已触发！');
+            });
+        });
+        
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                if (!this.classList.contains('flipped')) {
+                    this.classList.add('flipped');
+                } else {
+                    this.classList.remove('flipped');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

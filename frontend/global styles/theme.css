@@ -1,0 +1,35 @@
+/* 主题变量 - 写死 */
+:root {
+    /* 季节主题色 */
+    --spring-color: #4CAF50;      /* 绿色 */
+    --summer-color: #FF9800;      /* 橙色 */
+    --autumn-color: #FF5722;      /* 红色 */
+    --winter-color: #2196F3;      /* 蓝色 */
+    
+    /* 通用颜色 */
+    --white: #ffffff;
+    --black: #000000;
+    --gray-light: rgba(255, 255, 255, 0.7);
+    --gray-dark: rgba(0, 0, 0, 0.7);
+    
+    /* 渐变 */
+    --gradient-spring: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(139, 195, 74, 0.9));
+    --gradient-summer: linear-gradient(135deg, rgba(255, 152, 0, 0.9), rgba(255, 193, 7, 0.9));
+    --gradient-autumn: linear-gradient(135deg, rgba(255, 87, 34, 0.9), rgba(255, 152, 0, 0.9));
+    --gradient-winter: linear-gradient(135deg, rgba(33, 150, 243, 0.9), rgba(3, 169, 244, 0.9));
+    
+    /* 阴影 */
+    --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 15px 40px rgba(0, 0, 0, 0.2);
+    --shadow-heavy: 0 25px 60px rgba(0, 0, 0, 0.3);
+    
+    /* 动画时间 */
+    --transition-fast: 0.3s;
+    --transition-medium: 0.5s;
+    --transition-slow: 1s;
+    
+    /* 模糊效果 */
+    --blur-light: blur(5px);
+    --blur-medium: blur(10px);
+    --blur-heavy: blur(20px);
+}

@@ -1,0 +1,705 @@
+/* ===== 季节背景组件样式 ===== */
+.seasonal-background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -9999;
+    overflow: hidden;
+}
+
+.seasonal-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    filter: brightness(0.8) contrast(1.1);
+}
+
+.seasonal-bg-image.active {
+    opacity: 1;
+}
+
+#season-bg-spring {
+    background-image: url('/frontend/assets/backgrounds/spring.jpg');
+    background-color: #4CAF50;
+}
+
+#season-bg-summer {
+    background-image: url('/frontend/assets/backgrounds/summer.jpg');
+    background-color: #FF9800;
+}
+
+#season-bg-autumn {
+    background-image: url('/frontend/assets/backgrounds/autumn.jpg');
+    background-color: #FF5722;
+}
+
+#season-bg-winter {
+    background-image: url('/frontend/assets/backgrounds/winter.jpg');
+    background-color: #2196F3;
+}
+
+.seasonal-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.2) 0%, 
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    backdrop-filter: blur(2px);
+}
+
+/* ===== 固定顶部导航栏 ===== */
+.seasonal-fixed-header {
+    position: fixed; /* 改为fixed定位 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.2); /* 半透明背景 */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 40px;
+    position: relative;
+    z-index: 2;
+    gap: 20px;
+}
+
+/* ===== 时间日期显示 ===== */
+.header-left {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    min-width: 0;
+}
+
+.seasonal-time-display {
+    position: relative;
+    top: auto;
+    left: auto;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    animation: seasonal-fadeIn 1s ease;
+}
+
+@keyframes seasonal-fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.seasonal-date-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.seasonal-icon-wrapper {
+    font-size: 2.8rem;
+    opacity: 0.9;
+    animation: seasonal-float 3s ease-in-out infinite;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes seasonal-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.seasonal-date-info {
+    line-height: 1.4;
+}
+
+.seasonal-date {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.seasonal-time {
+    font-size: 1.8rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    margin-top: 5px;
+}
+
+.seasonal-greeting {
+    font-size: 1.1rem;
+    font-style: italic;
+    opacity: 0.9;
+    padding-left: 15px;
+    position: relative;
+    margin-top: 5px;
+    font-weight: 300;
+}
+
+.seasonal-greeting::before {
+    content: "「";
+    position: absolute;
+    left: 0;
+    opacity: 0.6;
+}
+
+.seasonal-greeting::after {
+    content: "」";
+    opacity: 0.6;
+}
+
+/* ===== 右侧导航区域 ===== */
+.header-right {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+
+.header-nav {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border-radius: 25px;
+    padding: 12px 30px;
+    box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    min-width: 400px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 添加渐变遮罩层 */
+.header-nav::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    transform: rotate(-10deg);
+    animation: nav-shimmer 8s linear infinite;
+    z-index: 0;
+}
+
+@keyframes nav-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.nav-list {
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    z-index: 1;
+    justify-content: flex-end;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.95rem;
+    font-weight: 500;
+    min-width: 80px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+    border: 1px solid transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 渐变背景效果 */
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    border-radius: 20px;
+}
+
+.nav-link i {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: inherit;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.nav-link span {
+    white-space: nowrap;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 悬停效果 */
+.nav-link:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.25),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.nav-link:hover::before {
+    opacity: 1;
+}
+
+.nav-link:hover i {
+    transform: scale(1.3) translateY(-2px);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* 登录和注册按钮特殊样式 */
+.login-btn, .register-btn {
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.login-btn {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        rgba(33, 150, 243, 0.3) 0%,
+        rgba(33, 150, 243, 0.6) 100%
+    );
+    border: 1px solid rgba(33, 150, 243, 0.4);
+}
+
+.register-btn {
+    color: #ffffff;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 87, 34, 0.3) 0%,
+        rgba(255, 87, 34, 0.6) 100%
+    );
+    border: 1px solid rgba(255, 87, 34, 0.4);
+}
+
+.login-btn::before,
+.register-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        transparent 100%
+    );
+    border-radius: 22px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.4s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(33, 150, 243, 0.5) 0%,
+        rgba(33, 150, 243, 0.8) 100%
+    );
+    border-color: rgba(33, 150, 243, 0.8);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+        0 15px 30px rgba(33, 150, 243, 0.3),
+        0 5px 15px rgba(33, 150, 243, 0.2);
+}
+
+.register-btn:hover {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 87, 34, 0.5) 0%,
+        rgba(255, 87, 34, 0.8) 100%
+    );
+    border-color: rgba(255, 87, 34, 0.8);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+        0 15px 30px rgba(255, 87, 34, 0.3),
+        0 5px 15px rgba(255, 87, 34, 0.2);
+}
+
+.login-btn:hover::before,
+.register-btn:hover::before {
+    opacity: 1;
+    animation: button-glow 2s ease-in-out infinite;
+}
+
+@keyframes button-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* 季节主题对右侧的影响 */
+body.season-spring .header-nav {
+    border-color: rgba(76, 175, 80, 0.4);
+    background: linear-gradient(
+        135deg,
+        rgba(76, 175, 80, 0.1) 0%,
+        rgba(76, 175, 80, 0.2) 100%
+    );
+}
+
+body.season-summer .header-nav {
+    border-color: rgba(255, 152, 0, 0.4);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 152, 0, 0.1) 0%,
+        rgba(255, 152, 0, 0.2) 100%
+    );
+}
+
+body.season-autumn .header-nav {
+    border-color: rgba(255, 87, 34, 0.4);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 87, 34, 0.1) 0%,
+        rgba(255, 87, 34, 0.2) 100%
+    );
+}
+
+body.season-winter .header-nav {
+    border-color: rgba(33, 150, 243, 0.4);
+    background: linear-gradient(
+        135deg,
+        rgba(33, 150, 243, 0.1) 0%,
+        rgba(33, 150, 243, 0.2) 100%
+    );
+}
+
+/* ===== 页面主要内容 ===== */
+.page-content {
+    margin-top: 120px;
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 40px;
+    color: white;
+}
+
+/* ===== 飘落效果 ===== */
+.seasonal-falling-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9998;
+    overflow: hidden;
+}
+
+.seasonal-particle {
+    position: absolute;
+    top: -50px;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+    animation-name: seasonal-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    font-size: 20px;
+    opacity: 0;
+}
+
+@keyframes seasonal-fall {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 不同类型的粒子 */
+.seasonal-particle-spring {
+    color: #ffb6c1;
+    animation-name: seasonal-fall, seasonal-sway;
+    animation-timing-function: linear, ease-in-out;
+}
+
+.seasonal-particle-summer {
+    color: #ffeb3b;
+    text-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+    animation-name: seasonal-fall, seasonal-float;
+    animation-timing-function: linear, ease-in-out;
+}
+
+.seasonal-particle-autumn {
+    color: #ff8c00;
+    animation-name: seasonal-fall, seasonal-sway;
+    animation-timing-function: linear, ease-in-out;
+}
+
+.seasonal-particle-winter {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    animation-timing-function: linear;
+}
+
+@keyframes seasonal-sway {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(100px); }
+}
+
+@keyframes seasonal-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 1200px) {
+    .header-nav {
+        min-width: 350px;
+    }
+    
+    .nav-list {
+        gap: 20px;
+    }
+    
+    .nav-link {
+        min-width: 70px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .header-container {
+        padding: 0 25px;
+    }
+    
+    .header-nav {
+        min-width: 300px;
+        padding: 10px 25px;
+    }
+    
+    .nav-list {
+        gap: 15px;
+    }
+    
+    .nav-link {
+        padding: 8px 12px;
+        min-width: 65px;
+        font-size: 0.9rem;
+    }
+    
+    .nav-link i {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .seasonal-fixed-header {
+        height: 100px;
+    }
+    
+    .page-content {
+        margin-top: 100px;
+        padding: 20px;
+    }
+    
+    .header-container {
+        padding: 0 20px;
+        gap: 10px;
+    }
+    
+    .header-left {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+    
+    .header-right {
+        flex: 0 0 auto;
+        margin-left: 10px;
+    }
+    
+    .header-nav {
+        min-width: auto;
+        padding: 8px 15px;
+        border-radius: 20px;
+        justify-content: flex-end;
+    }
+    
+    .nav-list {
+        justify-content: flex-end;
+        gap: 8px;
+    }
+    
+    .nav-link {
+        padding: 6px 10px;
+        min-width: 55px;
+        font-size: 0.85rem;
+    }
+    
+    .nav-link i {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .seasonal-fixed-header {
+        height: 90px;
+    }
+    
+    .page-content {
+        margin-top: 90px;
+        padding: 15px;
+    }
+    
+    .header-container {
+        padding: 0 15px;
+    }
+    
+    .header-nav {
+        padding: 6px 12px;
+    }
+    
+    .nav-list {
+        gap: 6px;
+    }
+    
+    .nav-link {
+        padding: 5px 8px;
+        min-width: 50px;
+        font-size: 0.75rem;
+    }
+    
+    .nav-link i {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    
+    .nav-link span {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .seasonal-fixed-header {
+        height: 80px;
+    }
+    
+    .page-content {
+        margin-top: 80px;
+        padding: 10px;
+    }
+    
+    /* 在小屏幕下调整时间显示 */
+    .seasonal-time-display {
+        transform: scale(0.9);
+        transform-origin: left center;
+    }
+    
+    .seasonal-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        font-size: 2.2rem;
+    }
+    
+    .seasonal-date {
+        font-size: 1rem;
+    }
+    
+    .seasonal-time {
+        font-size: 1.4rem;
+    }
+    
+    .header-nav {
+        padding: 5px 10px;
+    }
+    
+    .nav-link {
+        padding: 4px 6px;
+        min-width: 45px;
+    }
+    
+    .nav-link span {
+        font-size: 0.65rem;
+    }
+}

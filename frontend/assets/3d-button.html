@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D立体按钮</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            font-family: 'Arial', sans-serif;
+            perspective: 1000px;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .button-3d {
+            position: relative;
+            display: inline-block;
+            padding: 22px 50px;
+            margin: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.3s, box-shadow 0.3s;
+            transform: translateZ(0);
+        }
+        
+        .button-3d::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            filter: brightness(0.7);
+            transform: translateZ(-20px);
+            z-index: -1;
+        }
+        
+        .button-3d.blue {
+            background: linear-gradient(145deg, #2575fc, #1c64e0);
+            box-shadow: 
+                0 10px 20px rgba(37, 117, 252, 0.3),
+                0 6px 6px rgba(37, 117, 252, 0.2);
+        }
+        
+        .button-3d.red {
+            background: linear-gradient(145deg, #ff416c, #ff4b2b);
+            box-shadow: 
+                0 10px 20px rgba(255, 65, 108, 0.3),
+                0 6px 6px rgba(255, 65, 108, 0.2);
+        }
+        
+        .button-3d.green {
+            background: linear-gradient(145deg, #00b09b, #96c93d);
+            box-shadow: 
+                0 10px 20px rgba(0, 176, 155, 0.3),
+                0 6px 6px rgba(0, 176, 155, 0.2);
+        }
+        
+        .button-3d:hover {
+            transform: translateZ(10px) rotateX(5deg);
+        }
+        
+        .button-3d:active {
+            transform: translateZ(0) translateY(5px);
+            transition: transform 0.1s;
+        }
+        
+        .button-3d:active::before {
+            transform: translateZ(-15px);
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+        
+        .instruction {
+            color: white;
+            margin-top: 40px;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>3D立体按钮效果</h1>
+        <div class="button-group">
+            <button class="button-3d blue">3D蓝色按钮</button>
+            <button class="button-3d red">3D红色按钮</button>
+            <button class="button-3d green">3D绿色按钮</button>
+        </div>
+        <p class="instruction">悬停查看3D效果，点击体验按压感</p>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.button-3d').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.style.transform = 'translateZ(0) translateY(5px)';
+            });
+            
+            button.addEventListener('mouseup', function() {
+                this.style.transform = 'translateZ(10px) rotateX(5deg)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateZ(0)';
+            });
+        });
+    </script>
+</body>
+</html>
