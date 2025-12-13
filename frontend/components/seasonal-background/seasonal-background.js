@@ -130,7 +130,9 @@ class SeasonalBackground {
         if (this.config.showTime) {
             this.updateDateTime();
         }
-        
+        //初始化导航栏高亮
+        this.initNavHighlight();
+        this.updateBrandInfoByPage();
         // 创建飘落效果
         if (this.config.showFallingEffects) {
             this.createFallingEffects(this.currentSeason);
@@ -143,7 +145,148 @@ class SeasonalBackground {
         
         console.log('季节背景组件初始化完成 - 当前季节:', this.currentSeason);
     }
+    //初始化导航栏高亮
+        initNavHighlight() {
+        // 获取所有导航链接
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        // 获取当前页面路径
+        const currentPath = window.location.pathname;
+        const currentHash = window.location.hash;
+        
+        // 默认首页高亮
+        let activeFound = false;
+        
+        // 遍历所有导航链接
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            
+            // 清除现有高亮
+            link.classList.remove('active');
+            
+            // 检查是否是当前页面
+            if (this.isCurrentPage(href, currentPath, currentHash)) {
+                link.classList.add('active');
+                activeFound = true;
+            }
+        });
+        
+        // 如果没有找到匹配的，默认选中首页
+        if (!activeFound && navLinks.length > 0) {
+            navLinks[0].classList.add('active');
+        }
+        
+        // 点击导航时更新高亮
+        this.bindNavClickEvents();
+    }
     
+    // 在 seasonal-background.js 的 initNavHighlight 方法后添加
+
+    /**
+     * 根据页面更新品牌信息
+     */
+    updateBrandInfoByPage() {
+        const pageTitle = document.title;
+        const path = window.location.pathname;
+        
+        // 获取品牌信息元素
+        const siteTitle = document.querySelector('.site-title');
+        const siteSubtitle = document.querySelector('.site-subtitle');
+        
+        if (!siteTitle || !siteSubtitle) return;
+        
+        // 根据页面更新副标题
+        let subtitle = 'Premium Effects Gallery'; // 默认
+        if(path.includes('effects')||path.includes('效果库')){
+            subtitle = '效果库';
+        }
+         else if (path.includes('login') || path.includes('登录')) {
+            subtitle = '用户登录';
+        } 
+        else if (path.includes('register') || path.includes('注册')) {
+            subtitle = '用户注册';
+        } 
+        else if (path.includes('profile') || path.includes('个人中心')) {
+            subtitle = '个人中心';
+        }
+        
+        siteSubtitle.textContent = subtitle;
+    }
+
+
+
+    /**
+     * 判断是否当前页面
+     */
+    isCurrentPage(href, currentPath, currentHash) {
+        // 如果 href 是空或 #，认为是首页
+        if (!href || href === '#' || href === '/') {
+            return currentPath === '/' || currentPath === '/index.html' || currentPath === '';
+        }
+        
+        // 如果是 hash 链接（如 #effects）
+        if (href.startsWith('#')) {
+            return currentHash === href || 
+                   (currentHash === '' && href === '#home');
+        }
+        
+        // 如果是文件路径（如 index.html, categories.html）
+        if (href.includes('.html')) {
+            const hrefFilename = href.split('/').pop(); // 获取文件名
+            const currentFilename = currentPath.split('/').pop();
+            return hrefFilename === currentFilename;
+        }
+        
+        // 如果是目录路径（如 /effects/）
+        return currentPath.includes(href);
+    }
+    
+    /**
+     * 绑定导航点击事件
+     */
+    bindNavClickEvents() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // 移除所有高亮
+                navLinks.forEach(l => l.classList.remove('active'));
+                
+                // 给点击的链接添加高亮
+                link.classList.add('active');
+                
+                // 如果是hash链接，平滑滚动
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // 更新URL hash（但不刷新页面）
+                        window.history.pushState(null, null, href);
+                    }
+                }
+                
+                // 如果是页面跳转，记录到localStorage（用于返回时保持高亮）
+                if (href && (href.includes('.html') || href.includes('/'))) {
+                    localStorage.setItem('lastActiveNav', href);
+                }
+            });
+        });
+        
+        // 监听浏览器前进/后退
+        window.addEventListener('popstate', () => {
+            setTimeout(() => {
+                this.initNavHighlight();
+            }, 100);
+        });
+    }
     // 检查必要元素是否存在
     checkElements() {
         const requiredSelectors = [

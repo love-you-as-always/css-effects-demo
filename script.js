@@ -266,3 +266,91 @@ document.addEventListener('DOMContentLoaded', function() {
         return codes[number] || '/* 代码未找到 */';
     }
 });
+// 在现有脚本基础上添加
+
+// 滚动效果
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.professional-header');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+// 搜索功能
+const searchToggle = document.getElementById('searchToggle');
+const searchOverlay = document.getElementById('searchOverlay');
+const searchClose = document.getElementById('searchClose');
+const searchInput = document.querySelector('.search-input');
+
+if (searchToggle && searchOverlay) {
+    // 打开搜索
+    searchToggle.addEventListener('click', () => {
+        searchOverlay.classList.add('active');
+        setTimeout(() => {
+            searchInput?.focus();
+        }, 300);
+    });
+    
+    // 关闭搜索
+    searchClose.addEventListener('click', () => {
+        searchOverlay.classList.remove('active');
+    });
+    
+    // ESC键关闭搜索
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+            searchOverlay.classList.remove('active');
+        }
+    });
+}
+
+// 导航激活状态
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        
+        // 如果是内部链接，平滑滚动
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
+
+// 用户菜单点击外部关闭
+document.addEventListener('click', (e) => {
+    const userMenu = document.querySelector('.user-menu');
+    const avatarContainer = document.querySelector('.avatar-container');
+    
+    if (userMenu && avatarContainer && !avatarContainer.contains(e.target)) {
+        userMenu.style.opacity = '0';
+        userMenu.style.visibility = 'hidden';
+        userMenu.style.transform = 'translateY(10px)';
+    }
+});
+
+// 季节效果增强
+document.addEventListener('DOMContentLoaded', function() {
+    // 增强浮动效果
+    const floatingCore = document.querySelector('.floating-core');
+    if (floatingCore) {
+        floatingCore.addEventListener('mouseenter', function() {
+            this.style.animationPlayState = 'paused';
+        });
+        
+        floatingCore.addEventListener('mouseleave', function() {
+            this.style.animationPlayState = 'running';
+        });
+    }
+});
