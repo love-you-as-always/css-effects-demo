@@ -1,5 +1,4 @@
 /* ===== 季节背景组件样式 ===== */
-/* 模块化重构 | 总行数约 400 行 */
 
 /* ===== 1. 背景层 ===== */
 .seasonal-background-container {
@@ -95,6 +94,59 @@
         transform: translateY(100vh) rotate(360deg);
         opacity: 0;
     }
+}
+/* 春季 - 樱花 */
+.seasonal-particle-spring {
+    color: #ffb6c1;
+    animation-name: seasonal-fall, seasonal-sway-spring;
+    animation-timing-function: linear, ease-in-out;
+}
+@keyframes seasonal-sway-spring {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(80px) rotate(20deg); }
+    50% { transform: translateX(40px) rotate(-10deg); }
+    75% { transform: translateX(60px) rotate(15deg); }
+}
+/* 夏季 - 太阳 */
+.seasonal-particle-summer {
+    color: #ffeb3b;
+    text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+    animation-name: seasonal-fall, seasonal-bounce-summer;
+    animation-timing-function: linear, cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes seasonal-bounce-summer {
+    0%, 100% { 
+        transform: translateY(0) scale(1);
+        opacity: 0.9;
+    }
+    25% { 
+        transform: translateY(-40px) scale(1.2);
+        opacity: 1;
+    }
+    50% { 
+        transform: translateY(20px) scale(0.9);
+        opacity: 0.8;
+    }
+    75% { 
+        transform: translateY(-20px) scale(1.1);
+        opacity: 0.95;
+    }
+}
+
+/* 秋季 - 落叶 */
+.seasonal-particle-autumn {
+    color: #ff8c00;
+    animation-name: seasonal-fall, seasonal-spin-autumn;
+    animation-timing-function: linear, ease-in-out;
+}
+
+@keyframes seasonal-spin-autumn {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(90deg) scale(1.1); }
+    50% { transform: rotate(180deg) scale(0.9); }
+    75% { transform: rotate(270deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
 }
 
 .seasonal-particle-spring {
@@ -303,6 +355,7 @@
     color: #00ffff;
     text-shadow: 0 0 10px rgba(0,255,255,0.5);
     letter-spacing: 1px;
+    transition: color 0.5s ease, text-shadow 0.5s ease;
 }
 
 .date-current {
@@ -334,6 +387,7 @@
     border: 1px solid rgba(255,255,255,0.1);
     backdrop-filter: blur(15px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
 }
 
 .nav-list {
@@ -571,7 +625,151 @@
     box-shadow: 0 10px 25px rgba(0,255,157,0.2);
 }
 
-/* ===== 9. 响应式设计 ===== */
+/* ===== 9. 季节头部样式 ===== */
+
+/* 春季头部 */
+.header-spring .main-navigation {
+    background: rgba(76, 175, 80, 0.2) !important;
+    border-color: rgba(76, 175, 80, 0.4) !important;
+}
+
+.header-spring .nav-link:hover {
+    background: rgba(76, 175, 80, 0.3) !important;
+    color: #81c784 !important;
+}
+
+.header-spring .nav-link.active {
+    background: rgba(76, 175, 80, 0.25) !important;
+    border-color: rgba(76, 175, 80, 0.5) !important;
+    color: #4CAF50 !important;
+}
+
+.header-spring .time-current {
+    color: #4CAF50 !important;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5) !important;
+}
+
+.header-spring .time-bubble {
+    background: rgba(76, 175, 80, 0.1) !important;
+    border-color: rgba(76, 175, 80, 0.3) !important;
+}
+
+/* 夏季头部 */
+.header-summer .main-navigation {
+    background: rgba(255, 152, 0, 0.2) !important;
+    border-color: rgba(255, 152, 0, 0.4) !important;
+}
+
+.header-summer .nav-link:hover {
+    background: rgba(255, 152, 0, 0.3) !important;
+    color: #ffb74d !important;
+}
+
+.header-summer .nav-link.active {
+    background: rgba(255, 152, 0, 0.25) !important;
+    border-color: rgba(255, 152, 0, 0.5) !important;
+    color: #FF9800 !important;
+}
+
+.header-summer .time-current {
+    color: #FF9800 !important;
+    text-shadow: 0 0 10px rgba(255, 152, 0, 0.5) !important;
+}
+
+.header-summer .time-bubble {
+    background: rgba(255, 152, 0, 0.1) !important;
+    border-color: rgba(255, 152, 0, 0.3) !important;
+}
+
+/* 秋季头部 */
+.header-autumn .main-navigation {
+    background: rgba(255, 87, 34, 0.2) !important;
+    border-color: rgba(255, 87, 34, 0.4) !important;
+}
+
+.header-autumn .nav-link:hover {
+    background: rgba(255, 87, 34, 0.3) !important;
+    color: #ff8a65 !important;
+}
+
+.header-autumn .nav-link.active {
+    background: rgba(255, 87, 34, 0.25) !important;
+    border-color: rgba(255, 87, 34, 0.5) !important;
+    color: #FF5722 !important;
+}
+
+.header-autumn .time-current {
+    color: #FF5722 !important;
+    text-shadow: 0 0 10px rgba(255, 87, 34, 0.5) !important;
+}
+
+.header-autumn .time-bubble {
+    background: rgba(255, 87, 34, 0.1) !important;
+    border-color: rgba(255, 87, 34, 0.3) !important;
+}
+
+/* 冬季头部 */
+.header-winter .main-navigation {
+    background: rgba(33, 150, 243, 0.2) !important;
+    border-color: rgba(33, 150, 243, 0.4) !important;
+}
+
+.header-winter .nav-link:hover {
+    background: rgba(33, 150, 243, 0.3) !important;
+    color: #64b5f6 !important;
+}
+
+.header-winter .nav-link.active {
+    background: rgba(33, 150, 243, 0.25) !important;
+    border-color: rgba(33, 150, 243, 0.5) !important;
+    color: #2196F3 !important;
+}
+
+.header-winter .time-current {
+    color: #2196F3 !important;
+    text-shadow: 0 0 10px rgba(33, 150, 243, 0.5) !important;
+}
+
+.header-winter .time-bubble {
+    background: rgba(33, 150, 243, 0.1) !important;
+    border-color: rgba(33, 150, 243, 0.3) !important;
+}
+
+/* 浮动核心季节颜色 */
+.header-spring .floating-core {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(255, 182, 193, 0.1)) !important;
+}
+
+.header-summer .floating-core {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 235, 59, 0.1)) !important;
+}
+
+.header-autumn .floating-core {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.3), rgba(255, 140, 0, 0.1)) !important;
+}
+
+.header-winter .floating-core {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.3), rgba(255, 255, 255, 0.1)) !important;
+}
+
+/* 光环季节颜色 */
+.header-spring .ring {
+    border-color: rgba(76, 175, 80, 0.3) !important;
+}
+
+.header-summer .ring {
+    border-color: rgba(255, 152, 0, 0.3) !important;
+}
+
+.header-autumn .ring {
+    border-color: rgba(255, 87, 34, 0.3) !important;
+}
+
+.header-winter .ring {
+    border-color: rgba(33, 150, 243, 0.3) !important;
+}
+
+/* ===== 10. 响应式设计 ===== */
 @media (max-width: 1200px) {
     .header-content { padding: 0 30px; gap: 20px; }
     .floating-identifier { width: 50px; height: 50px; }
@@ -613,5 +811,5 @@
     .nav-text { display: none; }
     .nav-link { min-width: 45px; padding: 8px; }
     .time-bubble { flex-direction: column; gap: 5px; padding: 6px 12px; }
-    .search-toggle:checked ~ .search-wrapper { width: 150px; padding: 0 10px; }
+    .search-toggle:checked ~ .search-wrapper { width: 150px !important; padding: 0 10px; }
 }

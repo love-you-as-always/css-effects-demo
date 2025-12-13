@@ -118,15 +118,18 @@
             </nav>
             
             <!-- 行动按钮 -->
-            <!-- 在 header-right 部分的 action-buttons 中 -->
             <div class="action-buttons">
                 <!-- 搜索容器 -->
                 <div class="search-container">
+                    <!-- 隐藏的复选框用于控制展开/收起 -->
+                    <input type="checkbox" id="search-toggle" class="search-toggle">
+                    
                     <!-- 搜索触发按钮 -->
-                    <button class="search-trigger" title="搜索">
+                    <label for="search-toggle" class="search-trigger" title="搜索">
                         <i class="fas fa-search"></i>
-                    </button>
-                    <!-- 搜索框 -->
+                    </label>
+                    
+                    <!-- 搜索框 - 展开时在按钮下方 -->
                     <div class="search-wrapper">
                         <input type="text" class="search-input" placeholder="搜索CSS特效..." aria-label="搜索">
                         <button class="search-clear" title="清除">

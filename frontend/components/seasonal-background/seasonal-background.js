@@ -1,6 +1,6 @@
 /**
  * 季节背景组件
- * 功能：季节背景切换 + 时间日期显示 + 飘落效果 + 季节问候
+ * 功能：季节背景切换 + 时间日期显示 + 飘落效果 + 季节问候 + 头部主题
  * 使用方法：
  * 1. 引入seasonal-background.css
  * 2. 引入seasonal-background.js
@@ -16,14 +16,15 @@ class SeasonalBackground {
             showGreeting: true,
             showFallingEffects: true,
             autoUpdate: true,
-            updateInterval: 1000, // 时间更新间隔(ms)
+            updateInterval: 1000,
             ...options
         };
         
-        // 季节数据
+        // 季节数据 - 使用英文名称
         this.seasons = {
             spring: {
-                name: '春季',
+                name: 'spring',
+                chineseName: '春季',
                 months: [3, 4, 5],
                 icon: 'fa-seedling',
                 color: '#4CAF50',
@@ -44,7 +45,8 @@ class SeasonalBackground {
                 }
             },
             summer: {
-                name: '夏季',
+                name: 'summer',
+                chineseName: '夏季',
                 months: [6, 7, 8],
                 icon: 'fa-sun',
                 color: '#FF9800',
@@ -65,7 +67,8 @@ class SeasonalBackground {
                 }
             },
             autumn: {
-                name: '秋季',
+                name: 'autumn',
+                chineseName: '秋季',
                 months: [9, 10, 11],
                 icon: 'fa-leaf',
                 color: '#FF5722',
@@ -86,7 +89,8 @@ class SeasonalBackground {
                 }
             },
             winter: {
-                name: '冬季',
+                name: 'winter',
+                chineseName: '冬季',
                 months: [12, 1, 2],
                 icon: 'fa-snowflake',
                 color: '#2196F3',
@@ -130,9 +134,11 @@ class SeasonalBackground {
         if (this.config.showTime) {
             this.updateDateTime();
         }
-        //初始化导航栏高亮
+        
+        // 初始化导航栏高亮
         this.initNavHighlight();
         this.updateBrandInfoByPage();
+        
         // 创建飘落效果
         if (this.config.showFallingEffects) {
             this.createFallingEffects(this.currentSeason);
@@ -143,188 +149,55 @@ class SeasonalBackground {
             this.startAutoUpdate();
         }
         
-        console.log('季节背景组件初始化完成 - 当前季节:', this.currentSeason);
-    }
-    //初始化导航栏高亮
-        initNavHighlight() {
-        // 获取所有导航链接
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        // 获取当前页面路径
-        const currentPath = window.location.pathname;
-        const currentHash = window.location.hash;
-        
-        // 默认首页高亮
-        let activeFound = false;
-        
-        // 遍历所有导航链接
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            
-            // 清除现有高亮
-            link.classList.remove('active');
-            
-            // 检查是否是当前页面
-            if (this.isCurrentPage(href, currentPath, currentHash)) {
-                link.classList.add('active');
-                activeFound = true;
-            }
-        });
-        
-        // 如果没有找到匹配的，默认选中首页
-        if (!activeFound && navLinks.length > 0) {
-            navLinks[0].classList.add('active');
-        }
-        
-        // 点击导航时更新高亮
-        this.bindNavClickEvents();
+        console.log('✅ 季节背景组件初始化完成 - 当前季节:', this.currentSeason);
     }
     
-    // 在 seasonal-background.js 的 initNavHighlight 方法后添加
-
-    /**
-     * 根据页面更新品牌信息
-     */
-    updateBrandInfoByPage() {
-        const pageTitle = document.title;
-        const path = window.location.pathname;
-        
-        // 获取品牌信息元素
-        const siteTitle = document.querySelector('.site-title');
-        const siteSubtitle = document.querySelector('.site-subtitle');
-        
-        if (!siteTitle || !siteSubtitle) return;
-        
-        // 根据页面更新副标题
-        let subtitle = 'Premium Effects Gallery'; // 默认
-        if(path.includes('effects')||path.includes('效果库')){
-            subtitle = '效果库';
-        }
-         else if (path.includes('login') || path.includes('登录')) {
-            subtitle = '用户登录';
-        } 
-        else if (path.includes('register') || path.includes('注册')) {
-            subtitle = '用户注册';
-        } 
-        else if (path.includes('profile') || path.includes('个人中心')) {
-            subtitle = '个人中心';
-        }
-        
-        siteSubtitle.textContent = subtitle;
-    }
-
-
-
-    /**
-     * 判断是否当前页面
-     */
-    isCurrentPage(href, currentPath, currentHash) {
-        // 如果 href 是空或 #，认为是首页
-        if (!href || href === '#' || href === '/') {
-            return currentPath === '/' || currentPath === '/index.html' || currentPath === '';
-        }
-        
-        // 如果是 hash 链接（如 #effects）
-        if (href.startsWith('#')) {
-            return currentHash === href || 
-                   (currentHash === '' && href === '#home');
-        }
-        
-        // 如果是文件路径（如 index.html, categories.html）
-        if (href.includes('.html')) {
-            const hrefFilename = href.split('/').pop(); // 获取文件名
-            const currentFilename = currentPath.split('/').pop();
-            return hrefFilename === currentFilename;
-        }
-        
-        // 如果是目录路径（如 /effects/）
-        return currentPath.includes(href);
-    }
-    
-    /**
-     * 绑定导航点击事件
-     */
-    bindNavClickEvents() {
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                // 移除所有高亮
-                navLinks.forEach(l => l.classList.remove('active'));
-                
-                // 给点击的链接添加高亮
-                link.classList.add('active');
-                
-                // 如果是hash链接，平滑滚动
-                const href = link.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                    e.preventDefault();
-                    const targetId = href.substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                        
-                        // 更新URL hash（但不刷新页面）
-                        window.history.pushState(null, null, href);
-                    }
-                }
-                
-                // 如果是页面跳转，记录到localStorage（用于返回时保持高亮）
-                if (href && (href.includes('.html') || href.includes('/'))) {
-                    localStorage.setItem('lastActiveNav', href);
-                }
-            });
-        });
-        
-        // 监听浏览器前进/后退
-        window.addEventListener('popstate', () => {
-            setTimeout(() => {
-                this.initNavHighlight();
-            }, 100);
-        });
-    }
     // 检查必要元素是否存在
     checkElements() {
         const requiredSelectors = [
             '.seasonal-background-container',
-            '.seasonal-time-display',
-            '.seasonal-falling-effects',
-            '#seasonal-icon',
             '#seasonal-date',
             '#seasonal-time',
-            '#seasonal-greeting'
+            '#seasonal-greeting',
+            '.seasonal-falling-effects',
+            '#seasonal-icon',
+            '.professional-header'
         ];
         
         requiredSelectors.forEach(selector => {
-            if (!document.querySelector(selector)) {
-                console.warn(`季节背景组件：未找到元素 ${selector}，请确保HTML结构正确`);
+            const element = document.querySelector(selector);
+            if (!element) {
+                console.warn(`⚠️ 季节背景组件：未找到元素 ${selector}`);
+            } else {
+                console.log(`✓ 找到元素: ${selector}`);
             }
         });
     }
     
     // 获取当前季节
     getCurrentSeason() {
-        const now = new Date();
-        const month = now.getMonth() + 1;
+        const month = new Date().getMonth() + 1; // 1-12月
+        console.log(`📅 当前月份: ${month}月`);
         
-        for (const [seasonKey, seasonData] of Object.entries(this.seasons)) {
-            if (seasonData.months.includes(month)) {
-                return seasonKey;
-            }
+        // 简单季节判断
+        if (month >= 3 && month <= 5) {
+            return 'spring';
+        } else if (month >= 6 && month <= 8) {
+            return 'summer';
+        } else if (month >= 9 && month <= 11) {
+            return 'autumn';
+        } else {
+            return 'winter'; // 12月, 1月, 2月
         }
-        
-        // 默认冬季
-        return 'winter';
     }
     
     // 应用季节主题
     applySeasonTheme(seasonKey) {
         const season = this.seasons[seasonKey];
         if (!season) return;
+        
+        console.log(`🎨 应用季节主题: ${season.chineseName}`);
+        console.log(`🎨 季节颜色: ${season.color}`);
         
         // 1. 切换背景图片
         document.querySelectorAll('.seasonal-bg-image').forEach(bg => {
@@ -343,14 +216,72 @@ class SeasonalBackground {
             iconElement.style.color = season.color;
         }
         
-        // 3. 更新body的class（用于主题样式）
+        // 3. 更新body的class
         document.body.className = '';
         document.body.classList.add(`season-${seasonKey}`);
         
-        // 4. 更新问候语
+        // 4. 更新头部样式
+        this.updateHeaderTheme(season);
+        
+        // 5. 更新问候语
         if (this.config.showGreeting) {
             this.updateGreeting();
         }
+    }
+    
+    // 更新头部主题
+    updateHeaderTheme(season) {
+        const header = document.querySelector('.professional-header');
+        if (!header) {
+            console.warn('⚠️ 未找到头部元素');
+            return;
+        }
+        
+        // 移除所有季节类
+        const seasonClasses = ['header-spring', 'header-summer', 'header-autumn', 'header-winter'];
+        seasonClasses.forEach(cls => header.classList.remove(cls));
+        
+        // 添加当前季节类
+        const seasonClass = `header-${season.name}`;
+        header.classList.add(seasonClass);
+        
+        console.log(`✅ 头部应用季节类: ${seasonClass}`);
+        
+        // 设置一些内联样式确保效果
+        this.applyInlineHeaderStyles(season);
+    }
+    
+    // 应用内联头部样式
+    applyInlineHeaderStyles(season) {
+        const header = document.querySelector('.professional-header');
+        const nav = document.querySelector('.main-navigation');
+        const timeCurrent = document.querySelector('.time-current');
+        
+        // 头部主色调
+        if (header) {
+            header.style.setProperty('--season-color', season.color);
+        }
+        
+        // 导航栏样式
+        if (nav) {
+            const rgbaColor = this.hexToRgba(season.color, 0.2);
+            nav.style.background = rgbaColor;
+            nav.style.borderColor = this.hexToRgba(season.color, 0.4);
+        }
+        
+        // 时间颜色
+        if (timeCurrent) {
+            timeCurrent.style.color = season.color;
+            timeCurrent.style.textShadow = `0 0 10px ${this.hexToRgba(season.color, 0.4)}`;
+        }
+    }
+    
+    // 十六进制颜色转RGBA
+    hexToRgba(hex, alpha) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
     
     // 更新日期时间
@@ -414,80 +345,219 @@ class SeasonalBackground {
             if (Math.random() < 0.3) {
                 // 30%几率显示季节语录
                 const randomQuote = season.quotes[Math.floor(Math.random() * season.quotes.length)];
-                greetingElement.textContent = randomQuote;
+                greetingElement.textContent = `"${randomQuote}"`;
             } else {
                 // 70%几率显示时间问候
-                greetingElement.textContent = season.greetings[timeOfDay];
+                greetingElement.textContent = `"${season.greetings[timeOfDay]}"`;
             }
             greetingElement._lastUpdate = nowTime;
         }
     }
-    
-    // 创建飘落效果
-    createFallingEffects(seasonKey) {
-        const season = this.seasons[seasonKey];
-        const container = document.querySelector('.seasonal-falling-effects');
+    // 初始化导航栏高亮
+    initNavHighlight() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const currentPath = window.location.pathname;
+        const currentHash = window.location.hash;
         
-        if (!container || !season) return;
+        let activeFound = false;
         
-        // 清空现有粒子
-        container.innerHTML = '';
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            link.classList.remove('active');
+            
+            if (this.isCurrentPage(href, currentPath, currentHash)) {
+                link.classList.add('active');
+                activeFound = true;
+            }
+        });
         
-        // 根据季节设置粒子数量
-        let particleCount;
-        switch(seasonKey) {
-            case 'spring': particleCount = 25; break;
-            case 'summer': particleCount = 15; break;
-            case 'autumn': particleCount = 35; break;
-            case 'winter': particleCount = 50; break;
-            default: particleCount = 30;
+        if (!activeFound && navLinks.length > 0) {
+            navLinks[0].classList.add('active');
         }
         
-        // 创建粒子
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = `seasonal-particle ${season.particleClass}`;
-            particle.textContent = season.particle;
-            particle.dataset.index = i;
-            
-            // 随机属性
-            const left = Math.random() * 100;
-            const size = Math.random() * 20 + 12;
-            const duration = Math.random() * 15 + 10;
-            const delay = Math.random() * 8;
-            const opacity = Math.random() * 0.4 + 0.3;
-            const sway = Math.random() * 100 + 50;
-            
-            particle.style.cssText = `
-                left: ${left}%;
-                font-size: ${size}px;
-                animation-duration: ${duration}s;
-                animation-delay: ${delay}s;
-                opacity: ${opacity};
-                --sway-distance: ${sway}px;
-            `;
-            
-            container.appendChild(particle);
-        }
+        this.bindNavClickEvents();
     }
     
+    // 根据页面更新品牌信息
+    updateBrandInfoByPage() {
+        const path = window.location.pathname;
+        const siteSubtitle = document.querySelector('.site-subtitle');
+        
+        if (!siteSubtitle) return;
+        
+        let subtitle = 'Premium Effects Gallery';
+        if (path.includes('effects')) {
+            subtitle = '效果库';
+        } else if (path.includes('login')) {
+            subtitle = '用户登录';
+        } else if (path.includes('register')) {
+            subtitle = '用户注册';
+        } else if (path.includes('profile')) {
+            subtitle = '个人中心';
+        }
+        
+        siteSubtitle.textContent = subtitle;
+    }
+    
+    // 判断是否当前页面
+    isCurrentPage(href, currentPath, currentHash) {
+        if (!href || href === '#' || href === '/') {
+            return currentPath === '/' || currentPath === '/index.html' || currentPath === '';
+        }
+        
+        if (href.startsWith('#')) {
+            return currentHash === href || (currentHash === '' && href === '#home');
+        }
+        
+        if (href.includes('.html')) {
+            const hrefFilename = href.split('/').pop();
+            const currentFilename = currentPath.split('/').pop();
+            return hrefFilename === currentFilename;
+        }
+        
+        return currentPath.includes(href);
+    }
+    
+    // 绑定导航点击事件
+    bindNavClickEvents() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        window.history.pushState(null, null, href);
+                    }
+                }
+                
+                if (href && (href.includes('.html') || href.includes('/'))) {
+                    localStorage.setItem('lastActiveNav', href);
+                }
+            });
+        });
+        
+        window.addEventListener('popstate', () => {
+            setTimeout(() => {
+                this.initNavHighlight();
+            }, 100);
+        });
+    }
+    
+   createFallingEffects(seasonKey) {
+    // 确保动画定义存在
+    this._ensureAnimations();
+    
+    const season = this.seasons[seasonKey];
+    if (!season) return;
+    
+    const container = document.querySelector('.seasonal-falling-effects');
+    if (!container) return;
+    
+    // 确保容器样式
+    container.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9998;
+        overflow: hidden;
+    `;
+    
+    // 清空容器
+    container.innerHTML = '';
+    
+    // 创建粒子
+    const particleCount = this._getParticleCount(seasonKey);
+    
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = `seasonal-particle ${season.particleClass}`;
+        particle.textContent = season.particle;
+        
+        // 应用内联样式确保生效
+        this._applyParticleStyle(particle, i, seasonKey);
+        
+        container.appendChild(particle);
+    }
+    
+    console.log(`✅ 创建 ${season.chineseName} 飘落效果: ${particleCount}个粒子`);
+}
+
+// 辅助方法：确保动画
+_ensureAnimations() {
+    if (!document.getElementById('seasonal-animations-backup')) {
+        const style = document.createElement('style');
+        style.id = 'seasonal-animations-backup';
+        style.textContent = `@keyframes seasonal-fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }`;
+        document.head.appendChild(style);
+    }
+}
+
+// 辅助方法：获取粒子数量
+_getParticleCount(seasonKey) {
+    switch(seasonKey) {
+        case 'spring': return 25;
+        case 'summer': return 15;
+        case 'autumn': return 35;
+        case 'winter': return 50;
+        default: return 30;
+    }
+}
+
+// 辅助方法：应用粒子样式
+_applyParticleStyle(particle, index, seasonKey) {
+    const left = Math.random() * 100;
+    const size = 20 + Math.random() * 15;
+    const duration = 10 + Math.random() * 15;
+    const delay = Math.random() * 5;
+    const opacity = 0.4 + Math.random() * 0.3;
+    
+    particle.style.cssText = `
+        position: absolute;
+        top: -50px;
+        left: ${left}%;
+        font-size: ${size}px;
+        animation: seasonal-fall ${duration}s linear ${delay}s infinite;
+        opacity: ${opacity};
+        z-index: 1;
+        pointer-events: none;
+        user-select: none;
+    `;
+}
+        
     // 开始自动更新
     startAutoUpdate() {
-        // 更新时间
         if (this.config.showTime) {
             this.timeInterval = setInterval(() => {
                 this.updateDateTime();
             }, this.config.updateInterval);
         }
         
-        // 每30分钟重新创建飘落效果（避免内存泄漏）
         this.fallingInterval = setInterval(() => {
             if (this.config.showFallingEffects) {
                 this.createFallingEffects(this.currentSeason);
             }
         }, 30 * 60 * 1000);
         
-        // 每6小时检查季节变化
         this.seasonCheckInterval = setInterval(() => {
             const newSeason = this.getCurrentSeason();
             if (newSeason !== this.currentSeason) {
@@ -507,7 +577,7 @@ class SeasonalBackground {
         if (this.seasonCheckInterval) clearInterval(this.seasonCheckInterval);
     }
     
-    // 手动切换季节（可用于测试）
+    // 手动切换季节
     setSeason(seasonKey) {
         if (this.seasons[seasonKey]) {
             this.currentSeason = seasonKey;
@@ -529,7 +599,6 @@ class SeasonalBackground {
     destroy() {
         this.stopAutoUpdate();
         
-        // 移除所有粒子
         const container = document.querySelector('.seasonal-falling-effects');
         if (container) {
             container.innerHTML = '';
@@ -539,7 +608,7 @@ class SeasonalBackground {
     }
 }
 
-// 自动初始化（如果页面已加载）
+// 自动初始化
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         window.seasonalBackground = new SeasonalBackground();

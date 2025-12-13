@@ -63,14 +63,87 @@
             padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             height: 100%;
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
         }   
-        
+                /* 春季主题 - 樱花风格 */
+        body.season-spring .effect-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 182, 193, 0.1),      /* 樱花粉 */
+                rgba(76, 175, 80, 0.05)        /* 春绿色 */
+            ) !important;
+            border: 1px solid rgba(255, 182, 193, 0.3) !important;
+            box-shadow: 0 10px 25px rgba(255, 182, 193, 0.15) !important;
+        }
+
+        body.season-spring .effect-title {
+            color: #ffb6c1; /* 樱花粉 */
+        }
+
+        body.season-spring .effect-number {
+            color: #4CAF50; /* 春绿色 */
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        /* 夏季主题 - 阳光风格 */
+        body.season-summer .effect-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 235, 59, 0.1),       /* 阳光黄 */
+                rgba(255, 152, 0, 0.05)        /* 夏橙色 */
+            ) !important;
+            border: 1px solid rgba(255, 235, 59, 0.3) !important;
+            box-shadow: 0 10px 25px rgba(255, 235, 59, 0.15) !important;
+        }
+
+        body.season-summer .effect-title {
+            color: #FFEB3B; /* 阳光黄 */
+        }
+
+        body.season-summer .effect-number {
+            color: #FF9800; /* 夏橙色 */
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        /* 秋季主题 - 落叶风格 */
+        body.season-autumn .effect-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 140, 0, 0.1),        /* 落叶橙 */
+                rgba(255, 87, 34, 0.05)        /* 秋红色 */
+            ) !important;
+            border: 1px solid rgba(255, 140, 0, 0.3) !important;
+            box-shadow: 0 10px 25px rgba(255, 140, 0, 0.15) !important;
+        }
+
+        body.season-autumn .effect-title {
+            color: #ff8c00; /* 落叶橙 */
+        }
+
+        body.season-autumn .effect-number {
+            color: #FF5722; /* 秋红色 */
+            background: rgba(255, 87, 34, 0.1);
+        }
+
+        /* 冬季主题 - 冰雪风格 */
+        body.season-winter .effect-card {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1),      /* 雪白色 */
+                rgba(33, 150, 243, 0.05)       /* 冬蓝色 */
+            ) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.15) !important;
+        }
+
+        body.season-winter .effect-title {
+            color: #ffffff; /* 雪白色 */
+        }
+
+        body.season-winter .effect-number {
+            color: #2196F3; /* 冬蓝色 */
+            background: rgba(33, 150, 243, 0.1);
+        }
         .effect-card::before {
             content: '';
             position: absolute;
